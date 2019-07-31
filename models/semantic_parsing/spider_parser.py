@@ -80,7 +80,7 @@ class SpiderParser(Model):
         self._action_padding_index = -1  # the padding value used by IndexField
 
         self._exact_match = Average()
-        self._sql_evaluator_match = Average()
+        #self._sql_evaluator_match = Average()
         self._action_similarity = Average()
         self._acc_single = Average()
         self._acc_multi = Average()
@@ -693,7 +693,7 @@ class SpiderParser(Model):
     def get_metrics(self, reset: bool = False) -> Dict[str, float]:
         return {
             '_match/exact_match': self._exact_match.get_metric(reset),
-            'sql_match': self._sql_evaluator_match.get_metric(reset),
+            #'sql_match': self._sql_evaluator_match.get_metric(reset),
             '_others/action_similarity': self._action_similarity.get_metric(reset),
             '_match/match_single': self._acc_single.get_metric(reset),
             '_match/match_hard': self._acc_multi.get_metric(reset),
@@ -776,7 +776,7 @@ class SpiderParser(Model):
             if i not in best_final_states:
                 self._exact_match(0)
                 self._action_similarity(0)
-                self._sql_evaluator_match(0)
+                #self._sql_evaluator_match(0)
                 self._acc_multi(0)
                 self._acc_single(0)
                 outputs['predicted_sql_query'].append('')
@@ -795,17 +795,19 @@ class SpiderParser(Model):
                 sequence_in_targets = self._action_history_match(best_action_indices, targets)
                 self._exact_match(sequence_in_targets)
 
-                sql_evaluator_match = self._evaluate_func(original_gold_sql_query, predicted_sql_query, world[i].db_id)
-                self._sql_evaluator_match(sql_evaluator_match)
+                #sql_evaluator_match = self._evaluate_func(original_gold_sql_query, predicted_sql_query, world[i].db_id)
+                #self._sql_evaluator_match(sql_evaluator_match)
 
                 similarity = difflib.SequenceMatcher(None, best_action_indices, targets)
                 self._action_similarity(similarity.ratio())
 
                 difficulty = self._query_difficulty(targets, action_mapping, i)
+                '''
                 if difficulty:
                     self._acc_multi(sql_evaluator_match)
                 else:
                     self._acc_single(sql_evaluator_match)
+                '''
 
             beam_hit = False
             for pos, final_state in enumerate(best_final_states[i]):

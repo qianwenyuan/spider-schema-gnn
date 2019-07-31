@@ -19,10 +19,15 @@ GRAMMAR_DICTIONARY["query"] = ['(ws select_core ws groupby_clause ws orderby_cla
                                '(ws select_core ws orderby_clause)',
                                '(ws select_core)']
 
+'''
 GRAMMAR_DICTIONARY["select_core"] = ['(select_with_distinct ws select_results ws from_clause ws where_clause)',
                                      '(select_with_distinct ws select_results ws from_clause)',
                                      '(select_with_distinct ws select_results ws where_clause)',
                                      '(select_with_distinct ws select_results)']
+                                     '''
+GRAMMAR_DICTIONARY["select_core"] = ['(select_with_distinct ws select_results ws where_clause)',
+                                     '(select_with_distinct ws select_results)']
+
 GRAMMAR_DICTIONARY["select_with_distinct"] = ['(ws "select" ws "distinct")', '(ws "select")']
 GRAMMAR_DICTIONARY["select_results"] = ['(ws select_result ws "," ws select_results)', '(ws select_result)']
 GRAMMAR_DICTIONARY["select_result"] = ['"*"', '(table_source ws ".*")',

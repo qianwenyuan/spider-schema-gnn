@@ -513,11 +513,13 @@ def parse_sql(toks, start_idx, tables_with_alias, schema, mapped_entities_fn=Non
         idx += 1
 
     # parse from clause in order to get default tables
+
     from_end_idx, table_units, conds, default_tables = parse_from(toks, start_idx, tables_with_alias, schema)
     sql['from'] = {'table_units': table_units, 'conds': conds}
+
     # select clause
     _, select_col_units = parse_select(toks, idx, tables_with_alias, schema, default_tables)
-    idx = from_end_idx
+    #idx = from_end_idx
     sql['select'] = select_col_units
     # where clause
     idx, where_conds = parse_where(toks, idx, tables_with_alias, schema, default_tables)

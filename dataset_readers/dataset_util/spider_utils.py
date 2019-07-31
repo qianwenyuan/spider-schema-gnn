@@ -234,6 +234,7 @@ def disambiguate_items(db_id: str, query_toks: List[str], tables_file: str, allo
 
     fixed_toks = []
     i = 0
+    flag = True
     while i < len(query_toks):
         tok = query_toks[i]
         if tok == 'value' or tok == "'value'":
@@ -247,6 +248,12 @@ def disambiguate_items(db_id: str, query_toks: List[str], tables_file: str, allo
             i += 2
         else:
             new_tok = tok
+        ### edited
+        if tok=='FROM' or tok=='from':
+            flag=False
+        if tok=='WHERE' or tok=='GROUP' or tok=='ORDER' or tok=='where' or tok=='group' or tok=='order':
+            flag=True
+        #if flag==True:
         fixed_toks.append(new_tok)
         i += 1
 
