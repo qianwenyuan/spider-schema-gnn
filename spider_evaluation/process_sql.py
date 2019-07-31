@@ -519,7 +519,7 @@ def parse_sql(toks, start_idx, tables_with_alias, schema, mapped_entities_fn=Non
 
     # select clause
     _, select_col_units = parse_select(toks, idx, tables_with_alias, schema, default_tables)
-    #idx = from_end_idx
+    idx = from_end_idx
     sql['select'] = select_col_units
     # where clause
     idx, where_conds = parse_where(toks, idx, tables_with_alias, schema, default_tables)
